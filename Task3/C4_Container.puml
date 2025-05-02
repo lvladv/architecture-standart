@@ -12,14 +12,14 @@ System(webBank, "Интернет банк")
 System(ABS, "АБС", "АБС система")
 System(SMS, "SMS", "SMS шлюз")
 
-Container_Boundary(webBank, "FitLife System") {
+Container_Boundary(webBank, "") {
   Container(WebApp, "Web Application", "React, CSS", "клиенткая часть интеренет банка")
   Container(Service, "Service", "C#", "бэк-энд част интеренет бакнка")
   Container(DepositService, "Deposit Service", "C#", "сервис депозитов")
   Container(WebBankDatabase, "Database", "MS SQL", "БД сервиса депозитов")
 }
 
-Container_Boundary(ABS, "FitLife System") {
+Container_Boundary(ABS, "") {
   Container(ABSWebApp, "Web Application", "React, CSS", "клиенткая часть АБС")
   Container(ABSService, "ABS Service", "Delphi", "сервис АБС")
   Container(Database, "Database", "Oracle", "БД для АБС")
@@ -27,9 +27,10 @@ Container_Boundary(ABS, "FitLife System") {
 
 Rel(user, webBank, "работа клиента с интернет баком")
 Rel(backOffice, ABSWebApp, "работа менеджера с сервисами abs")
-Rel(ABSWebApp, ABS, "взаимодействие бэк-фронт")
+Rel(WebApp, Service,"Получение списка депозитов посредством get запроса (https)")
+Rel(WebApp, Service,"Подача заявки на открытие депозита (post запрос)")
 
-Rel(WebApp, Service,"взаимодействие бэк-фронт")
+Rel(ABSWebApp, ABSService, "ведение депозитов сотрубдником через интерфейс")
 Rel(Service, DepositService,"работа с сервисов депозитов")
 Rel(DepositService, WebBankDatabase, "Запись/Чтение БД")
 
