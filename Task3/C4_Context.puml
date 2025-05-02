@@ -1,0 +1,34 @@
+@startuml
+title Context Diagram
+
+top to bottom direction
+
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Component.puml
+
+Person(user, "Клиент", "Клиент банка")
+Person(backOffice, "Менеджер бэк-офиса")
+Person(call, "Оператор", "оператор колл ценра")
+System(SMS, "смс шлюз", "система рассылки смс")
+System(ABS, "АБС", "АБС система")
+System(callSystem, "колл-центр")
+System(web, "Сайт банка" )
+System(webBank, "Интернет банк")
+
+
+Rel(user,web, "список доступных депозитов")
+Rel(user,webBank,"список доступных депозитов с актуальными ставками и персонализированные ставки")
+
+Rel(web, ABS, "заявка на депозит")
+Rel(call,user,"звонок оператора с предложением")
+
+Rel(webBank,ABS,"заявка на открытие депозита")
+
+Rel(ABS, backOffice,"Работа с заявками")
+Rel(backOffice, ABS,"Работа с заявками")
+Rel(SMS,user,"смс уведомление")
+Rel(ABS,callSystem, "")
+
+Rel(callSystem,call, "")
+
+
+@enduml

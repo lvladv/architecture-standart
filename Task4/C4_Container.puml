@@ -1,0 +1,34 @@
+@startuml
+title Container Diagram
+
+top to bottom direction
+
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Component.puml
+
+Person(user, "Клиент", "Клиент банка")
+Person(backOffice, "Менеджер бэк-офиса")
+Person(call, "Оператор", "оператор колл ценра")
+
+
+System(ABS, "АБС", "АБС система")
+System(callSystem, "колл-центр")
+System_Ext(callPartner, "Партнерский кол центр")
+
+
+Container_Boundary(ABS, "FitLife System") {
+  Container(ABSWebApp, "Web Application", "React, CSS", "клиенткая часть АБС")
+  Container(ABSService, "ABS Service", "Delphi", "сервис АБС")
+  Container(Database, "Database", "Oracle", "БД для АБС")
+}
+
+
+Rel(backOffice, ABSWebApp, "Взаимодействие с АБС")
+Rel(ABSWebApp, ABSService, "")
+Rel(ABSService, Database, "Запись/Чтение БД")
+Rel(ABSService, callSystem, "Получение информации по депазитам")
+Rel(callSystem, call, "Предоставление оператарам информации")
+Rel(callSystem, callPartner, "Предоставление партнерам информации через файл")
+Rel(call, user, "консультация")
+Rel(callPartner, user, "консультация")
+
+@enduml
